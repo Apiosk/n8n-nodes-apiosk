@@ -38,7 +38,7 @@ export class Apiosk implements INodeType {
 		version: 1,
 		subtitle: '={{ $parameter["operation"] === "plan" ? "plan (free)" : "run job (pays)" }}',
 		description:
-			'Describe any job in plain words; Apiosk searches every available x402 endpoint, picks the one that best fits, fills in its parameters, pays it from your connected wallet, and returns the response',
+			'Describe a job in plain words. Apiosk picks the right x402 API, pays it from your wallet, and returns the response.',
 		defaults: {
 			name: 'Apiosk',
 		},
