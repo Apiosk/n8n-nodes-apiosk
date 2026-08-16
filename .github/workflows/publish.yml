@@ -12,7 +12,7 @@
 #   1. On npmjs.com, open this package's settings.
 #   2. "Publish access" → "Trusted Publishers" → "Add a publisher".
 #   3. Select GitHub Actions and fill in:
-#        Repository owner: apiosk
+#        Repository owner: Apiosk
 #        Repository name:  n8n-nodes-apiosk
 #        Workflow name:    publish.yml
 #        Environment:      (leave blank)
@@ -77,13 +77,20 @@ jobs:
         # `n8n-node release` detects GITHUB_ACTIONS and switches from the
         # interactive local flow to lint + build + publish --provenance.
         #
-        # Option A (OIDC): leave NPM_TOKEN unset — the config step is skipped
-        #   and npm performs the OIDC exchange instead.
-        # Option B (token): set NPM_TOKEN in repo secrets.
-        run: |
-          if [ -n "$NPM_TOKEN" ]; then
-            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-          fi
-          npm run release
+        # NODE_AUTH_TOKEN is the canonical hand-off: the `registry-url` input on
+        # actions/setup-node above writes an .npmrc containing
+        # `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` and points
+        # NPM_CONFIG_USERCONFIG at it, so npm reads the token from this env var.
+        # Don't `npm config set` the token instead — that writes to the same
+        # file setup-node manages and makes it ambiguous which credential is
+        # actually sent.
+        #
+        # Option A (OIDC): leave the NPM_TOKEN secret unset — the token line
+        #   resolves empty and npm performs the OIDC exchange instead.
+        # Option B (token): set NPM_TOKEN in repo secrets. It must be a
+        #   granular access token with *Read and write* on **All packages**
+        #   (a token scoped to selected packages cannot cover a package that
+        #   does not exist yet) and *Bypass 2FA* enabled.
+        run: npm run release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
