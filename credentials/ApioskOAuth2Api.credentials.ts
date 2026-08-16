@@ -44,7 +44,7 @@ export class ApioskOAuth2Api implements ICredentialType {
 			displayName: 'Authorization URL',
 			name: 'authUrl',
 			type: 'hidden',
-			default: 'https://buyer.apiosk.com/connect',
+			default: 'https://buy.apiosk.com/connect',
 		},
 		{
 			displayName: 'Access Token URL',
