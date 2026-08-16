@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apiosk/n8n-nodes-apiosk.git"
+    "url": "git+https://github.com/Apiosk/n8n-nodes-apiosk.git"
   },
   "engines": {
     "node": ">=18.10"
@@ -54,5 +54,8 @@
     "eslint-plugin-n8n-nodes-base": "^1.16.7",
     "n8n-workflow": "^1.70.0",
     "typescript": "^5.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
