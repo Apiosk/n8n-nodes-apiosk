@@ -38,7 +38,7 @@ export class Apiosk implements INodeType {
 		version: 1,
 		subtitle: '={{ $parameter["operation"] === "plan" ? "plan (free)" : "run job (pays)" }}',
 		description:
-			'Describe a job in plain words; Apiosk finds the right paid API, fills in its parameters, pays it from your connected wallet, and returns the response',
+			'Describe any job in plain words; Apiosk searches every available x402 endpoint, picks the one that best fits, fills in its parameters, pays it from your connected wallet, and returns the response',
 		defaults: {
 			name: 'Apiosk',
 		},
@@ -85,7 +85,7 @@ export class Apiosk implements INodeType {
 				required: true,
 				placeholder: 'Get Nvidia earnings news from the last 7 days',
 				description:
-					'The job in plain words. Apiosk splits it, finds the API, and fills the API\'s own parameters in from these words — nothing is ever invented to fill a gap.',
+					'The job in plain words — anything, not a fixed list of supported tasks. Apiosk splits it, searches every live x402 endpoint for one that serves it, and fills that API\'s own parameters in from these words — nothing is ever invented to fill a gap.',
 			},
 			{
 				displayName: 'Options',

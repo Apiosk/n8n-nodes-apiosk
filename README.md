@@ -1,24 +1,40 @@
 # n8n-nodes-apiosk
 
-Describe a job in plain words. Apiosk finds the right paid API, fills in its
-parameters, **pays it from your connected wallet** (x402/USDC), and returns the
-provider's response — as one n8n node.
+Describe **any** job in plain words. Apiosk searches every x402 endpoint it can
+reach — the whole marketplace plus any private endpoints your token can see —
+picks the one that best fits *that* job, fills in its parameters, **pays it
+from your connected wallet** (x402/USDC), and returns the provider's response.
+One n8n node.
 
-It replaces the middle of flows like this:
-
-```
-Ask → Classify → Extract → Route → [NewsAPI | Alpha Vantage | Tavily] → Normalize → Answer
-```
-
-with this:
+There is no integration list. You do not pre-select providers, pre-wire
+capabilities, or pre-register anything. The job prompt is open-ended, and the
+candidate set is resolved per call, at call time, across everything currently
+live on x402.
 
 ```
 Ask → Apiosk → Answer
 ```
 
-No accounts with twenty providers, no API keys per service, no hardcoded
-routing rules. The provider set grows on the Apiosk marketplace without your
-workflow changing.
+That replaces the classify-extract-route-fanout middle that open-ended jobs
+normally force you to build. To make it concrete — and this is **one example,
+not the supported set**:
+
+```
+Ask → Classify → Extract → Route ─┬─ NewsAPI ───────┬─ Normalize → Answer
+                                  ├─ Alpha Vantage ─┤
+                                  └─ Tavily ────────┘
+```
+
+Three branches, three accounts, three API keys, three sets of parameter-mapping
+logic — and it answers exactly the three kinds of job you thought of in advance.
+A fourth kind means editing the workflow.
+
+Apiosk inverts that. The node ships no knowledge of NewsAPI, Alpha Vantage,
+Tavily, or any other specific provider — it forwards your words to the gateway,
+which does discovery and selection against the live x402 registry. Ask it for
+something none of those three could serve and it finds whatever *can*, pays it,
+and returns the answer. New endpoints appearing on x402 become reachable to your
+existing workflow immediately, with no redeploy and no edit.
 
 ## Setup — once
 
@@ -63,16 +79,18 @@ operation to *Run Job*.
 ## What the response tells you
 
 Every answer carries the full trail, so "why did it call *that* API with
-*those* parameters?" is always answerable:
+*those* parameters?" is always answerable. `selected_api` is whatever the
+gateway discovered for your job — it is not drawn from any list this node
+knows about:
 
 ```jsonc
 {
   "did": true,
   "interpretation": { /* how your words were read (and how to override) */ },
   "decision": {
-    "selected_api": "alphavantage",
-    "reason": "alphavantage scores 87 of 100 optimising for price; ...",
-    "rejected": [ /* every loser, with the rule that removed it */ ]
+    "selected_api": "<whichever endpoint won>",
+    "reason": "scores 87 of 100 optimising for price; ...",
+    "rejected": [ /* every other candidate, with the rule that removed it */ ]
   },
   "request": { /* the exact request that was sent, parameter by parameter */ },
   "execution": {
