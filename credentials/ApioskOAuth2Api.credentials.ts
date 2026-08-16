@@ -37,15 +37,13 @@ export class ApioskOAuth2Api implements ICredentialType {
 	documentationUrl = 'https://docs.apiosk.com/dashboard/agent-wallets';
 
 	properties: INodeProperties[] = [
-		// n8n prints its own line under the OAuth Redirect URL field: "In Apiosk,
-		// use the URL above when prompted to enter an OAuth callback or redirect
-		// URL". It is generic text for every OAuth2 credential and it is wrong for
-		// this one — Apiosk registers n8n's callbacks itself, so there is no field
-		// to paste it into and buyers went looking for one. Say so above it, since
-		// the line underneath cannot be removed.
+		// n8n prints its own line under the OAuth Redirect URL field, telling the
+		// reader to paste that URL into Apiosk. It is generic text for every OAuth2
+		// credential, it cannot be removed, and it is wrong here — Apiosk registers
+		// n8n's callbacks itself. One short line above it is enough to stop the
+		// hunt for a field that does not exist.
 		{
-			displayName:
-				'Nothing to copy here: just press "Connect my account". Apiosk already knows n8n\'s callback address, so the OAuth Redirect URL below is shown for reference only — there is no field in Apiosk to paste it into.',
+			displayName: 'Just press "Connect my account". Nothing below needs copying.',
 			name: 'setupNotice',
 			type: 'notice',
 			default: '',

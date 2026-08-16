@@ -200,6 +200,25 @@ export class Apiosk implements INodeType {
 				: 'apioskOAuth2Api';
 
 		const credentials = await this.getCredentials(credentialType);
+
+		// n8n only guards "you never pressed Connect" for the plain
+		// authorization-code grant: `requestOAuth2` throws its readable "OAuth
+		// credentials not connected!" when `grantType === 'authorizationCode'` and
+		// walks straight past the check for anything else. This credential is PKCE,
+		// so an unconnected account fell through to client-oauth2 signing an empty
+		// token and surfaced as "Unable to sign without access token" — a sentence
+		// about a library nobody here installed, naming neither Apiosk nor the
+		// button that fixes it. Say what is actually wrong, before any request.
+		if (credentialType === 'apioskOAuth2Api') {
+			const tokenData = credentials.oauthTokenData as IDataObject | undefined;
+			if (!tokenData || !tokenData.access_token) {
+				throw new NodeOperationError(this.getNode(), 'This Apiosk account is not connected yet', {
+					description:
+						'Open the Apiosk credential and press "Connect my account". Finish the setup in the Apiosk window — it hands the connection back here by itself.',
+				});
+			}
+		}
+
 		const gatewayUrl = String(credentials.gatewayUrl ?? 'https://gateway.apiosk.com').replace(
 			/\/+$/,
 			'',
