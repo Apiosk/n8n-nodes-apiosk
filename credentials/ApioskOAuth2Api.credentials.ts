@@ -30,7 +30,11 @@ export class ApioskOAuth2Api implements ICredentialType {
 
 	displayName = 'Apiosk OAuth2 API';
 
-	documentationUrl = 'https://apiosk.com';
+	// The "Docs" link n8n puts next to the credential. Points at the wallet page
+	// rather than the site root: the question someone has open this dialog is
+	// where the spending authority comes from and what caps it carries, and that
+	// page answers it.
+	documentationUrl = 'https://docs.apiosk.com/dashboard/agent-wallets';
 
 	properties: INodeProperties[] = [
 		// PKCE, not the plain authorization-code grant — see the class comment.

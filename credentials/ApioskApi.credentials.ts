@@ -19,7 +19,9 @@ export class ApioskApi implements ICredentialType {
 
 	displayName = 'Apiosk API';
 
-	documentationUrl = 'https://apiosk.com';
+	// Straight to the page that covers minting and rotating the token this field
+	// wants, not the marketing site.
+	documentationUrl = 'https://docs.apiosk.com/dashboard/agent-wallets';
 
 	properties: INodeProperties[] = [
 		{
