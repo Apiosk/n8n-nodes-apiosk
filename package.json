@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-apiosk",
   "version": "0.1.4",
-  "description": "Describe a job in plain words; Apiosk finds the right paid API, fills in its parameters, pays it from your connected wallet (x402), and returns the provider's response.",
+  "description": "N8n node for discovering and using x402 APIs",
   "keywords": [
     "n8n-community-node-package",
     "n8n",
