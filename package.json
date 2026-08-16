@@ -4,12 +4,15 @@
   "description": "Describe a job in plain words; Apiosk finds the right paid API, fills in its parameters, pays it from your connected wallet (x402), and returns the provider's response.",
   "keywords": [
     "n8n-community-node-package",
+    "n8n",
+    "n8n-node",
     "apiosk",
     "x402",
     "api-marketplace",
     "payments",
     "usdc",
-    "agent"
+    "agent",
+    "ai-agent"
   ],
   "license": "MIT",
   "homepage": "https://apiosk.com",
