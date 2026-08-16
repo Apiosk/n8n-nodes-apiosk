@@ -39,7 +39,7 @@
     ]
   },
   "scripts": {
-    "build": "tsc && mkdir -p dist/nodes/Apiosk && cp nodes/Apiosk/apiosk.svg dist/nodes/Apiosk/",
+    "build": "tsc && mkdir -p dist/nodes/Apiosk && cp nodes/Apiosk/apiosk-mark.svg dist/nodes/Apiosk/",
     "dev": "tsc --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint nodes credentials package.json",
