@@ -31,7 +31,8 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ApioskApi.credentials.js"
+      "dist/credentials/ApioskApi.credentials.js",
+      "dist/credentials/ApioskOAuth2Api.credentials.js"
     ],
     "nodes": [
       "dist/nodes/Apiosk/Apiosk.node.js"

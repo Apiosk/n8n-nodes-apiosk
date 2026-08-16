@@ -38,13 +38,23 @@ New x402 APIs can become available to your workflow without changing the workflo
 
 ## Setup
 
-1. Sign in to **Apiosk**.
-2. Connect a wallet and fund it with **USDC on Base**.
-3. Set your **per-transaction** and **daily spending limits**.
-4. Copy your **Apiosk connect token**.
-5. In n8n, create an **Apiosk API credential** and paste the token.
+Add the Apiosk node, leave **Authentication** on **Connect My Account**, and click
+**Connect my account** on the credential. That opens the Apiosk buyer portal,
+where you pick a wallet, fund it and set the spending limits — and n8n collects
+the credential itself when you're done.
 
-That's it.
+The token never appears on your screen and never travels through the browser: the
+portal hands it to the Apiosk gateway, and n8n's server exchanges a one-time code
+for it (OAuth 2.0 authorization code with PKCE).
+
+The limits you set in the portal are the ones the gateway enforces on every call.
+This node cannot spend past them.
+
+### Already have a token?
+
+Switch **Authentication** to **Connect Token** and paste it into an **Apiosk API**
+credential. Same result — useful when your n8n can't reach the portal to do the
+round trip, or when the token came from somewhere else.
 
 ---
 

@@ -46,13 +46,43 @@ export class Apiosk implements INodeType {
 		inputs: ['main'] as NodeConnectionType[],
 		outputs: ['main', 'main'] as NodeConnectionType[],
 		outputNames: ['Done', 'Blocked'],
+		// Two ways in, same token underneath. "Connect my account" runs the
+		// authorization-code handoff (the buyer never sees the credential); the
+		// token field stays for anyone who already has one, or whose n8n cannot
+		// reach the portal to do the round trip.
 		credentials: [
+			{
+				name: 'apioskOAuth2Api',
+				required: true,
+				displayOptions: { show: { authentication: ['oAuth2'] } },
+			},
 			{
 				name: 'apioskApi',
 				required: true,
+				displayOptions: { show: { authentication: ['connectToken'] } },
 			},
 		],
 		properties: [
+			{
+				displayName: 'Authentication',
+				name: 'authentication',
+				type: 'options',
+				noDataExpression: true,
+				options: [
+					{
+						name: 'Connect My Account',
+						value: 'oAuth2',
+						description:
+							'Set the wallet and spending limits in the Apiosk portal; n8n collects the credential itself',
+					},
+					{
+						name: 'Connect Token',
+						value: 'connectToken',
+						description: 'Paste a connect token you already have',
+					},
+				],
+				default: 'oAuth2',
+			},
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -158,7 +188,14 @@ export class Apiosk implements INodeType {
 		const done: INodeExecutionData[] = [];
 		const blocked: INodeExecutionData[] = [];
 
-		const credentials = await this.getCredentials('apioskApi');
+		// Both credential types carry a `gatewayUrl` and both authenticate with the
+		// same header, so everything downstream of this pair is identical.
+		const credentialType =
+			(this.getNodeParameter('authentication', 0, 'oAuth2') as string) === 'connectToken'
+				? 'apioskApi'
+				: 'apioskOAuth2Api';
+
+		const credentials = await this.getCredentials(credentialType);
 		const gatewayUrl = String(credentials.gatewayUrl ?? 'https://gateway.apiosk.com').replace(
 			/\/+$/,
 			'',
@@ -212,7 +249,7 @@ export class Apiosk implements INodeType {
 
 				const response = (await this.helpers.httpRequestWithAuthentication.call(
 					this,
-					'apioskApi',
+					credentialType,
 					requestOptions,
 				)) as IDataObject;
 
