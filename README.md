@@ -100,12 +100,85 @@ Every answer carries the full trail, so "why did it call *that* API with
   a Code node) after the Apiosk node if you need a fixed shape — that's the one
   "middle node" Apiosk deliberately does not replace.
 
+## Install into n8n
+
+**n8n Cloud / self-hosted UI** — Settings → Community nodes → Install, enter
+`n8n-nodes-apiosk`.
+
+**Self-hosted, manually:**
+
+```bash
+mkdir -p ~/.n8n/nodes && cd ~/.n8n/nodes
+npm install n8n-nodes-apiosk
+```
+
+Restart n8n; the node appears as **Apiosk**. See the
+[community nodes docs](https://docs.n8n.io/integrations/community-nodes/installation/).
+
 ## Development
 
 ```bash
-npm install
+npm install --ignore-scripts
 npm run build     # tsc + copies the icon into dist/
+npm run lint      # the ruleset n8n runs against community packages
+npm run verify    # loads dist/ the way n8n's community-node loader does
 ```
 
-Then link the package into your n8n instance
-([community nodes docs](https://docs.n8n.io/integrations/community-nodes/installation/)).
+`npm run verify` is the guard on the deploy path: it reads the `n8n` manifest
+from `package.json`, requires every file it declares, instantiates the classes,
+and checks the icon shipped, the credential the node names actually exists, and
+that the package pulls **no** runtime dependencies onto the n8n host.
+
+`--ignore-scripts` is deliberate. `n8n-workflow` is a **devDependency only** —
+it is what n8n supplies to community nodes at runtime, so this package must
+never ship it. It drags in `isolated-vm`, a native module that compiles under
+`node-gyp` when no prebuilt binary matches your Node version, which is what
+makes a plain `npm install` fail. Nothing here executes it, so the build is
+skipped rather than fixed. If you do want it compiled (to run a full n8n
+locally), install the toolchain once with `xcode-select --install`.
+
+For the same reason there is no `peerDependencies` block: npm auto-installs
+peer dependencies, so declaring `n8n-workflow` there would push the entire
+`n8n-workflow` tree — `isolated-vm` included — onto every n8n host that
+installs this node. The official `n8n-nodes-starter` omits it too.
+
+### Do not run `npm audit fix --force`
+
+`npm audit` reports devDependencies, and every finding here is inside the
+`n8n-workflow` / `@n8n/node-cli` toolchain. None of it ships. The number that
+matters is:
+
+```bash
+npm audit --omit=dev     # 0 vulnerabilities
+```
+
+`--force` has been tried: it bumped `n8n-workflow` a major version (silently
+changing which n8n API this node compiles against), downgraded
+`@n8n/node-cli` below the 0.23.0 that provenance publishing needs, and left
+*more* advisories than it started with. Pin the compile target deliberately
+instead: build against the **oldest** `n8n-workflow` you intend to support, so
+the node only uses APIs present on every host it runs on.
+
+### Test against a local n8n
+
+```bash
+npm run build
+npm link
+mkdir -p ~/.n8n/nodes && cd ~/.n8n/nodes && npm link n8n-nodes-apiosk
+n8n start
+```
+
+### Publish
+
+```bash
+npm publish --access public
+```
+
+`prepublishOnly` rebuilds from a clean `dist/` and runs the lint first, so a
+broken build cannot reach the registry. Bump the version with `npm version
+patch|minor|major` beforehand.
+
+> The release command is `npx @n8n/node-cli release` — **not** `npx n8n-node`.
+> The bare `n8n-node` name on npm is a dependency-confusion placeholder that
+> ships no usable code. Publishing this package needs nothing beyond
+> `npm publish`.

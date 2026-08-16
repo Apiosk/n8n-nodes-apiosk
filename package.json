@@ -18,14 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apiosk/n8n-nodes-apiosk.git"
+    "url": "git+https://github.com/apiosk/n8n-nodes-apiosk.git"
   },
   "engines": {
     "node": ">=18.10"
   },
   "main": "index.js",
   "files": [
-    "dist"
+    "dist",
+    "index.js"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
@@ -39,13 +40,19 @@
   "scripts": {
     "build": "tsc && mkdir -p dist/nodes/Apiosk && cp nodes/Apiosk/apiosk.svg dist/nodes/Apiosk/",
     "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint",
+    "verify": "NODE_PATH=./node_modules node scripts/verify-package.js",
+    "release": "n8n-node release"
   },
   "devDependencies": {
+    "@n8n/node-cli": "^0.43.4",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-n8n-nodes-base": "^1.16.7",
     "n8n-workflow": "^1.70.0",
     "typescript": "^5.5.0"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
   }
 }
