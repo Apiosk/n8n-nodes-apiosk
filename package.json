@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-apiosk",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "N8n node that turns a plain-words job into a paid x402 API call",
   "keywords": [
     "n8n-community-node-package",
