@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-apiosk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "N8n node for discovering and using x402 APIs",
   "keywords": [
     "n8n-community-node-package",
