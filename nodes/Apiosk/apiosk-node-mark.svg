@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc" shape-rendering="geometricPrecision">
+<!--
+  viewBox is cropped to the artwork's own bounds (x 151-872.5, y 110-906) plus an
+  8-unit margin, squared and re-centred, instead of the 1024 grid the mark was
+  drawn on. n8n scales an icon to fit a fixed square box, so every unit of empty
+  padding inside the viewBox is a unit the mark does not get: on the old grid the
+  glyph reached 78% of the box and read small next to the built-in node icons.
+  Keep the box tight if the geometry below ever changes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="105.75 102 812 812" role="img" aria-labelledby="title desc" shape-rendering="geometricPrecision">
   <title id="title">Apiosk logo</title>
   <desc id="desc">A central node connected to six outer nodes.</desc>
   <defs>

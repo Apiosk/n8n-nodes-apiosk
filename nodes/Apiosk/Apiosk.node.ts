@@ -37,7 +37,7 @@ export class Apiosk implements INodeType {
 		// community icons from a version-independent URL, so a browser that has
 		// cached one apiosk.svg never refetches it across releases. Renaming the
 		// file is the only reliable way to push an icon change to existing users.
-		icon: 'file:apiosk-mark.svg',
+		icon: 'file:apiosk-node-mark.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{ $parameter["operation"] === "plan" ? "plan (free)" : "run job (pays)" }}',
