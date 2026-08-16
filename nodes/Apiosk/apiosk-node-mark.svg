@@ -1,36 +1,31 @@
 <!--
-  viewBox is cropped to the artwork's own bounds (x 151-872.5, y 110-906) plus an
-  8-unit margin, squared and re-centred, instead of the 1024 grid the mark was
+  Traced from the Apiosk brand mark: a hub with four diagonal spokes, plus a
+  detached node above and below. The top and bottom nodes carry NO connector —
+  that gap is part of the mark, do not "fix" it by joining all six spokes.
+  Fill is the flat brand violet #6531EA; the mark has no gradient.
+
+  viewBox is cropped to the artwork's own bounds (x 188.5-835.5, y 153-871) plus
+  an 8-unit margin, squared and re-centred, instead of the 1024 grid the mark was
   drawn on. n8n scales an icon to fit a fixed square box, so every unit of empty
-  padding inside the viewBox is a unit the mark does not get: on the old grid the
-  glyph reached 78% of the box and read small next to the built-in node icons.
-  Keep the box tight if the geometry below ever changes.
+  padding inside the viewBox is a unit the mark does not get. Keep the box tight
+  if the geometry below ever changes.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="105.75 102 812 812" role="img" aria-labelledby="title desc" shape-rendering="geometricPrecision">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="145 145 734 734" role="img" aria-labelledby="title desc" shape-rendering="geometricPrecision">
   <title id="title">Apiosk logo</title>
-  <desc id="desc">A central node connected to six outer nodes.</desc>
-  <defs>
-    <linearGradient id="apiosk-violet" x1="158" y1="120" x2="866" y2="906" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#8b5cf6" />
-      <stop offset="52%" stop-color="#6b38d4" />
-      <stop offset="100%" stop-color="#5516be" />
-    </linearGradient>
-  </defs>
-  <g fill="none" stroke="url(#apiosk-violet)" stroke-width="43" stroke-linecap="butt">
-    <line x1="511.5" y1="190.5" x2="511.5" y2="511.5" />
-    <line x1="231" y1="335" x2="511.5" y2="511.5" />
-    <line x1="792.5" y1="335" x2="511.5" y2="511.5" />
-    <line x1="231" y1="675" x2="511.5" y2="511.5" />
-    <line x1="792.5" y1="675" x2="511.5" y2="511.5" />
-    <line x1="511.5" y1="825.5" x2="511.5" y2="511.5" />
+  <desc id="desc">A central node linked to four outer nodes, with a free-standing node above and below.</desc>
+  <g fill="none" stroke="#6531EA" stroke-width="43.5" stroke-linecap="butt">
+    <line x1="268" y1="352" x2="512" y2="512" />
+    <line x1="756" y1="352" x2="512" y2="512" />
+    <line x1="268" y1="672" x2="512" y2="512" />
+    <line x1="756" y1="672" x2="512" y2="512" />
   </g>
-  <g fill="url(#apiosk-violet)">
-    <circle cx="511.5" cy="190.5" r="80.5" />
-    <circle cx="231" cy="335" r="80" />
-    <circle cx="792.5" cy="335" r="80" />
-    <circle cx="511.5" cy="511.5" r="135" />
-    <circle cx="231" cy="675" r="80" />
-    <circle cx="792.5" cy="675" r="80" />
-    <circle cx="511.5" cy="825.5" r="80.5" />
+  <g fill="#6531EA">
+    <circle cx="512" cy="232.5" r="79.5" />
+    <circle cx="268" cy="352" r="79.5" />
+    <circle cx="756" cy="352" r="79.5" />
+    <circle cx="512" cy="512" r="135" />
+    <circle cx="268" cy="672" r="79.5" />
+    <circle cx="756" cy="672" r="79.5" />
+    <circle cx="512" cy="791.5" r="79.5" />
   </g>
 </svg>
