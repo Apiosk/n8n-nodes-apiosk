@@ -1,0 +1,51 @@
+{
+  "name": "n8n-nodes-apiosk",
+  "version": "0.1.0",
+  "description": "Describe a job in plain words; Apiosk finds the right paid API, fills in its parameters, pays it from your connected wallet (x402), and returns the provider's response.",
+  "keywords": [
+    "n8n-community-node-package",
+    "apiosk",
+    "x402",
+    "api-marketplace",
+    "payments",
+    "usdc",
+    "agent"
+  ],
+  "license": "MIT",
+  "homepage": "https://apiosk.com",
+  "author": {
+    "name": "Apiosk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apiosk/n8n-nodes-apiosk.git"
+  },
+  "engines": {
+    "node": ">=18.10"
+  },
+  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ApioskApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Apiosk/Apiosk.node.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc && mkdir -p dist/nodes/Apiosk && cp nodes/Apiosk/apiosk.svg dist/nodes/Apiosk/",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "n8n-workflow": "^1.70.0",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
