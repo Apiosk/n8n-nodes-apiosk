@@ -43,7 +43,8 @@ export class ApioskOAuth2Api implements ICredentialType {
 		// n8n's callbacks itself. One short line above it is enough to stop the
 		// hunt for a field that does not exist.
 		{
-			displayName: 'Just press "Connect my account". Nothing below needs copying.',
+			displayName:
+				'Just press "Connect my account". Nothing below needs copying. If the popup ends in "Unauthorized", you are browsing n8n at a different address than the host in the OAuth Redirect URL below: open the editor at that exact address, sign in, and connect again.',
 			name: 'setupNotice',
 			type: 'notice',
 			default: '',
